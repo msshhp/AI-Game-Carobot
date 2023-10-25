@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicTacToe AI</title>
+    <!-- Include Bootstrap CSS for styling -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        td {
+            border: 1px solid black;
+            width: 150px;
+            height: 150px;
+            font-size: 30px;
+            text-align: center;
+        }
+        td > a {
+            font-size: 18px;
+            display: block;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+        }
+        .center-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Set height to 100% of the viewport height */
+        }
+        .btn-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<body>
+    <div class="center-container">
+        <div>
+            <a href="{{url_for('reset')}}" class="btn btn-default">Reset Game</a>
+        </div>
+
+        {% if draw %}
+            <div>
+                <h1> Game Drawn</h1>
+            </div>
+        {% endif %}
+        {% if winnerFound %}
+            <div>
+                <h1> WINNER is {{winner}}</h1>
+            </div>
+        {% endif %}
+
+        <table>
+            {% for i in range(3) %}
+                <tr>
+                    {% for j in range(3) %}
+                        <td>
+                            {% if game[i][j] %}
+                                {{ game[i][j] }}
+                            {% else %}
+                                <a href="{{ url_for('play', row=i, col=j) }}">Play {{turn}} here.</a>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
